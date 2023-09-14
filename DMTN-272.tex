@@ -49,6 +49,22 @@ We report the current status of the real-bogus classifier. The report starts wit
 % ADD CONTENT HERE
 % You can also use the \input command to include several content files.
 
+\section{Architecture}
+So far, we have run the experiments with three different architectures:
+
+\begin{itemize}
+\item{An off-the-shelf architecture based on ResNet50.}
+\item{An off-the-shelf architecture based on VGG6.}
+\item{A custom architecture based on the encoder part of TransiNet, internally referred to as rbTN}.
+\end{itemize}
+
+The former two (ResNet50 and VGG6) have been more extensively tested.
+
+\section{Data}
+We used the version of the DC2 dataset available as a butler repository, as the main source of our data.
+
+
+
 \appendix
 % Include all the relevant bib files.
 % https://lsst-texmf.lsst.io/lsstdoc.html#bibliographies
