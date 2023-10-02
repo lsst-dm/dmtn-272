@@ -63,7 +63,22 @@ The former two (ResNet50 and VGG6) have been more extensively tested.
 \section{Data}
 We used the version of the DC2 dataset available as a butler repository, as the main source of our data.
 
+We have chosen the tract 3080 for training and 4024 for test/validation. Reasoning TBA.
+Figures~\ref{fig:exposure_hist}~,~\ref{fig:detector_hist} show the distributions of exposure ($\sim$visit) and detector numbers in the raw images currently captured (simulated) in each ot the chosen tracts. The detector indices are, neglecting the narrow peaks, roughly uniformly distributed, meaning that we have an almost equal number of raw images for each detector/CCD in each of the chosen tracts. This is particularly important for the training phase as we do not want the model to be biased towards specific detector characteristics.
 
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.7\textwidth]{exposure_hist.png}
+  \caption{Distribution of exposure numbers of the existing raw images of each of the tracts. Left: tract \#3080, right: tract \#4024.}
+  \label{fig:exposure_hist}
+\end{figure}
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.7\textwidth]{detector_hist.png}
+  \caption{Distribution of the detector indices of the existing raw images of each of the tracts. Left: tract \#3080, right: tract \#4024.}
+  \label{fig:detector_hist}
+\end{figure}
 
 \appendix
 % Include all the relevant bib files.
