@@ -64,7 +64,7 @@ The former two (ResNet50 and VGG6) have been more extensively tested.
 We used the version of the DC2 dataset available as a butler repository, as the main source of our data.
 
 We have chosen the tract 3080 for training and 4024 for test/validation. Reasoning TBA.
-Figures~\ref{fig:exposure_hist}~,~\ref{fig:detector_hist} show the distributions of exposure ($\sim$visit) and detector numbers in the raw images currently captured (simulated) in each ot the chosen tracts. The detector indices are, neglecting the narrow peaks, roughly uniformly distributed, meaning that we have an almost equal number of raw images for each detector/CCD in each of the chosen tracts. This is particularly important for the training phase as we do not want the model to be biased towards specific detector characteristics.
+Figures~\ref{fig:exposure_hist}~,~\ref{fig:detector_hist} show the distributions of exposure ($\sim$visit) and detector numbers in the raw images currently captured (simulated) in each ot the chosen tracts. The detector indices are, neglecting the narrow peaks, roughly uniformly distributed, meaning that we have an almost equal number of raw images (roughly 300) for each detector/CCD in each of the chosen tracts. This is particularly important for the training phase as we do not want the model to be biased towards specific detector characteristics.
 
 \begin{figure}[h]
   \centering
@@ -75,10 +75,21 @@ Figures~\ref{fig:exposure_hist}~,~\ref{fig:detector_hist} show the distributions
 
 \begin{figure}[h]
   \centering
+  \includegraphics[width=0.7\textwidth]{tract_detectors.png}
   \includegraphics[width=0.7\textwidth]{detector_hist.png}
-  \caption{Distribution of the detector indices of the existing raw images of each of the tracts. Left: tract \#3080, right: tract \#4024.}
+  \caption{On the top, the detectors (CCD) are illustrated with their relative spatial arrangement. The bottom two images depict the distribution of detector indices of the existing raw images of each of the tracts. Left: tract \#3080, right: tract \#4024.}
   \label{fig:detector_hist}
 \end{figure}
+
+Template images were created per-tract, in the sense that the data input to the APTemplate pipeline was constrained to a single tract at each run. Figure~\ref{fig:tract_templates} illustrates an exemplar instance, where the effect of limiting the raws to a single tract apperas as croppings in the output templates. This is not of a concern in this very application though, since the downstream tasks receive proper masks and will generate cutouts only of the regions from which enough informative data can be extracted.
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.7\textwidth]{tract_templates.png}
+  \caption{Templates generated based on raw images from a single tract. The white chessboard in the background is the spatial spread of the detectors (a single visit/exposure), whereas the area ``full of stars'' represents a single tract in the sky.}
+  \label{fig:tract_templates}
+\end{figure}
+
 
 \appendix
 % Include all the relevant bib files.
