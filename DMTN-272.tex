@@ -91,6 +91,31 @@ Template images were created per-tract, in the sense that the data input to the 
 \end{figure}
 
 
+\section{Evaluation Results}
+
+\subsection{The ``PCW 2022'' network and data}
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.5\textwidth]{precrec___checkpoint_epoch0000087_iter0200000____rbdata_data_npy_data_gt1M___posw_30.png}
+  \caption{No sigma-thresholding applied on the input sources (diffim output)}
+  \label{fig:tract_templates}
+\end{figure}
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.5\textwidth]{precrec___checkpoint_epoch0000087_iter0200000____rbdata_data_npy_data_gt1M-5sigma___posw_30.png}
+  \caption{Only sources with $snr > 5\sigma$}
+  \label{fig:tract_templates}
+\end{figure}
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.5\textwidth]{precrec___checkpoint_epoch0000087_iter0200000____rbdata_data_npy_data_gt1M-6sigma___posw_30.png}
+  \caption{Only sources with $snr > 6\sigma$}
+  \label{fig:tract_templates}
+\end{figure}
+
+
 \appendix
 % Include all the relevant bib files.
 % https://lsst-texmf.lsst.io/lsstdoc.html#bibliographies
