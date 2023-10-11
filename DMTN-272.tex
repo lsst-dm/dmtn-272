@@ -38,6 +38,7 @@ We report the current status of the real-bogus classifier. The report starts wit
   \addtohist{1}{YYYY-MM-DD}{Unreleased.}{Nima Sedaghat}
 }
 
+\usepackage{grffile}
 
 \begin{document}
 
@@ -66,15 +67,16 @@ We used the version of the DC2 dataset available as a butler repository, as the 
 We have chosen the tract 3080 for training and 4024 for test/validation. Reasoning TBA.
 Figures~\ref{fig:exposure_hist}~,~\ref{fig:detector_hist} show the distributions of exposure ($\sim$visit) and detector numbers in the raw images currently captured (simulated) in each ot the chosen tracts. The detector indices are, neglecting the narrow peaks, roughly uniformly distributed, meaning that we have an almost equal number of raw images (roughly 300) for each detector/CCD in each of the chosen tracts. This is particularly important for the training phase as we do not want the model to be biased towards specific detector characteristics.
 
-\begin{figure}[h]
 More details about the exact data-set used for each experiment is included in the experiment's subsection.
+
+\begin{figure}[h!]
   \centering
   \includegraphics[width=0.7\textwidth]{exposure_hist.png}
   \caption{Distribution of exposure numbers of the existing raw images of each of the tracts. Left: tract \#3080, right: tract \#4024.}
   \label{fig:exposure_hist}
 \end{figure}
 
-\begin{figure}[h]
+\begin{figure}[h!]
   \centering
   \includegraphics[width=0.7\textwidth]{tract_detectors.png}
   \includegraphics[width=0.7\textwidth]{detector_hist.png}
@@ -82,6 +84,7 @@ More details about the exact data-set used for each experiment is included in th
   \label{fig:detector_hist}
 \end{figure}
 
+\clearpage
 Template images were created per-tract, in the sense that the data input to the APTemplate pipeline was constrained to a single tract at each run. Figure~\ref{fig:tract_templates} illustrates an exemplar instance, where the effect of limiting the raws to a single tract apperas as croppings in the output templates. This is not of a concern in this very application though, since the downstream tasks receive proper masks and will generate cutouts only of the regions from which enough informative data can be extracted.
 
 \begin{figure}[h]
@@ -91,30 +94,107 @@ Template images were created per-tract, in the sense that the data input to the 
   \label{fig:tract_templates}
 \end{figure}
 
-
+%----------------------------------------------------
+\clearpage
 \section{Evaluation Results}
 
 \subsection{The ``PCW 2022'' network and data}
+The data-set used for training this model, DL Dataset v0.1.1, consists of \texttt{78222} triplets, out of which \texttt{2591} triplets ($\sim 3\%$) are \texttt{positive}s.
+
 \begin{figure}[h]
   \centering
-  \includegraphics[width=0.5\textwidth]{precrec___checkpoint_epoch0000087_iter0200000____rbdata_data_npy_data_gt1M___posw_30.png}
+  \includegraphics[width=0.5\textwidth]{precrec___checkpoint_epoch0000087_0200000____rbdata_data_npy_data_gt1M___posw_30.png}
   \caption{No sigma-thresholding applied on the input sources (diffim output)}
   \label{fig:tract_templates}
 \end{figure}
 
 \begin{figure}[h]
   \centering
-  \includegraphics[width=0.5\textwidth]{precrec___checkpoint_epoch0000087_iter0200000____rbdata_data_npy_data_gt1M-5sigma___posw_30.png}
+  \includegraphics[width=0.5\textwidth]{precrec___checkpoint_epoch0000087_0200000____rbdata_data_npy_data_gt1M-5sigma___posw_30.png}
   \caption{Only sources with $snr > 5\sigma$}
   \label{fig:tract_templates}
 \end{figure}
 
 \begin{figure}[h]
   \centering
-  \includegraphics[width=0.5\textwidth]{precrec___checkpoint_epoch0000087_iter0200000____rbdata_data_npy_data_gt1M-6sigma___posw_30.png}
+  \includegraphics[width=0.5\textwidth]{precrec___checkpoint_epoch0000087_0200000____rbdata_data_npy_data_gt1M-6sigma___posw_30.png}
   \caption{Only sources with $snr > 6\sigma$}
   \label{fig:tract_templates}
 \end{figure}
+
+% ----------------------------------------------------
+\clearpage
+\subsection{New Dataset}
+The new dataset (DL v0.1.2) is essentially the same as the previous version (v.0.1.1), only regenerated with a more recent version of the stack (\texttt{w\_2023\_38}). The number of images is relatively higher though, in the new version: there are \texttt{183750} triplets, out of which \texttt{10147} ($\sim 5\%$) are positives.
+
+We used a $95-5$ training-validation split, which leaves us with \texttt{9198} validation triplets (with \texttt{533} $\simeq 5\%$ positives).
+
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.4\textwidth]{precrec_13-resnet50-FullAugmentation-scratch-B64__0255000__npy_data_0.1.2-0sigma_256by256__posw_20.png}
+  \includegraphics[width=0.4\textwidth]{confmat_13-resnet50-FullAugmentation-scratch-B64__0255000__npy_data_0.1.2-0sigma_256by256__posw_20.png}
+  \includegraphics[width=0.4\textwidth]{roc_13-resnet50-FullAugmentation-scratch-B64__0255000__npy_data_0.1.2-0sigma_256by256__posw_20.png}
+  \includegraphics[width=0.4\textwidth]{det_13-resnet50-FullAugmentation-scratch-B64__0255000__npy_data_0.1.2-0sigma_256by256__posw_20.png}
+  \caption{Evaluation results based on the whole dataset.}
+  \label{fig:tract_templates}
+\end{figure}
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.4\textwidth]{precrec_13-resnet50-FullAugmentation-scratch-B64__0255000__npy_data_0.1.2-5sigma_256by256__posw_20.png}
+  \includegraphics[width=0.4\textwidth]{confmat_13-resnet50-FullAugmentation-scratch-B64__0255000__npy_data_0.1.2-5sigma_256by256__posw_20.png}
+  \includegraphics[width=0.4\textwidth]{roc_13-resnet50-FullAugmentation-scratch-B64__0255000__npy_data_0.1.2-5sigma_256by256__posw_20.png}
+  \includegraphics[width=0.4\textwidth]{det_13-resnet50-FullAugmentation-scratch-B64__0255000__npy_data_0.1.2-5sigma_256by256__posw_20.png}
+  \caption{Only sources with $snr > 5\sigma$}
+  \label{fig:tract_templates}
+\end{figure}
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.4\textwidth]{precrec_13-resnet50-FullAugmentation-scratch-B64__0255000__npy_data_0.1.2-6sigma_256by256__posw_20.png}
+  \includegraphics[width=0.4\textwidth]{confmat_13-resnet50-FullAugmentation-scratch-B64__0255000__npy_data_0.1.2-6sigma_256by256__posw_20.png}
+  \includegraphics[width=0.4\textwidth]{roc_13-resnet50-FullAugmentation-scratch-B64__0255000__npy_data_0.1.2-6sigma_256by256__posw_20.png}
+  \includegraphics[width=0.4\textwidth]{det_13-resnet50-FullAugmentation-scratch-B64__0255000__npy_data_0.1.2-6sigma_256by256__posw_20.png}
+  \caption{Only sources with $snr > 6\sigma$}
+  \label{fig:tract_templates}
+\end{figure}
+
+\clearpage
+
+\subsection{New Dataset -- No Weight Balancing}
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.4\textwidth]{precrec_13-resnet50-FullAugmentation-scratch-B64__0255000__npy_data_0.1.2-0sigma_256by256__posw_1.png}
+  \includegraphics[width=0.4\textwidth]{confmat_13-resnet50-FullAugmentation-scratch-B64__0255000__npy_data_0.1.2-0sigma_256by256__posw_1.png}
+  \includegraphics[width=0.4\textwidth]{roc_13-resnet50-FullAugmentation-scratch-B64__0255000__npy_data_0.1.2-0sigma_256by256__posw_1.png}
+  \includegraphics[width=0.4\textwidth]{det_13-resnet50-FullAugmentation-scratch-B64__0255000__npy_data_0.1.2-0sigma_256by256__posw_1.png}
+  \caption{Evaluation results based on the whole dataset.}
+  \label{fig:tract_templates}
+\end{figure}
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.4\textwidth]{precrec_13-resnet50-FullAugmentation-scratch-B64__0255000__npy_data_0.1.2-5sigma_256by256__posw_1.png}
+  \includegraphics[width=0.4\textwidth]{confmat_13-resnet50-FullAugmentation-scratch-B64__0255000__npy_data_0.1.2-5sigma_256by256__posw_1.png}
+  \includegraphics[width=0.4\textwidth]{roc_13-resnet50-FullAugmentation-scratch-B64__0255000__npy_data_0.1.2-5sigma_256by256__posw_1.png}
+  \includegraphics[width=0.4\textwidth]{det_13-resnet50-FullAugmentation-scratch-B64__0255000__npy_data_0.1.2-5sigma_256by256__posw_1.png}
+  \caption{Only sources with $snr > 5\sigma$}
+  \label{fig:tract_templates}
+\end{figure}
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.4\textwidth]{precrec_13-resnet50-FullAugmentation-scratch-B64__0255000__npy_data_0.1.2-6sigma_256by256__posw_1.png}
+  \includegraphics[width=0.4\textwidth]{confmat_13-resnet50-FullAugmentation-scratch-B64__0255000__npy_data_0.1.2-6sigma_256by256__posw_1.png}
+  \includegraphics[width=0.4\textwidth]{roc_13-resnet50-FullAugmentation-scratch-B64__0255000__npy_data_0.1.2-6sigma_256by256__posw_1.png}
+  \includegraphics[width=0.4\textwidth]{det_13-resnet50-FullAugmentation-scratch-B64__0255000__npy_data_0.1.2-6sigma_256by256__posw_1.png}
+  \caption{Only sources with $snr > 6\sigma$}
+  \label{fig:tract_templates}
+\end{figure}
+
+\clearpage
 
 
 \appendix
