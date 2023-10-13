@@ -65,7 +65,7 @@ The former two (ResNet50 and VGG6) have been more extensively tested.
 We used the version of the DC2 dataset available as a butler repository, as the main source of our data.
 
 We have chosen the tract 3080 for training and 4024 for test/validation. Reasoning TBA.
-Figures~\ref{fig:exposure_hist}~,~\ref{fig:detector_hist} show the distributions of exposure ($\sim$visit) and detector numbers in the raw images currently captured (simulated) in each of the chosen tracts. The detector indices are, neglecting the narrow peaks, roughly uniformly distributed, meaning that we have an almost equal number of raw images (roughly 300) for each detector/CCD in each of the chosen tracts. This is particularly important for the training phase as we do not want the model to be biased towards specific detector characteristics.
+Figures~\ref{fig:exposure_hist}~,~\ref{fig:detector_hist} show the distributions of exposure ($\simeq$visit) and detector numbers in the raw images currently captured (simulated) in each of the chosen tracts. The detector indices are, neglecting the narrow peaks, roughly uniformly distributed, meaning that we have an almost equal number of raw images (roughly 300) for each detector/CCD in each of the chosen tracts. This is particularly important for the training phase as we do not want the model to be biased towards specific detector characteristics.
 
 More details about the exact data-set used for each experiment is included in the experiment's subsection.
 
@@ -78,9 +78,9 @@ More details about the exact data-set used for each experiment is included in th
 
 \begin{figure}[h!]
   \centering
-  \includegraphics[width=0.7\textwidth]{tract_detectors.png}
+  %\includegraphics[width=0.7\textwidth]{tract_detectors.png}
   \includegraphics[width=0.7\textwidth]{detector_hist.png}
-  \caption{On the top, the detectors (CCD) are illustrated with their relative spatial arrangement. The bottom two images depict the distribution of detector indices of the existing raw images of each of the tracts. Left: tract \#3080, right: tract \#4024.}
+  \caption{Distribution of the detector indices corresponding to the raw images of each of the tracts. Left: tract \#3080, right: tract \#4024.}
   \label{fig:detector_hist}
 \end{figure}
 
@@ -127,7 +127,7 @@ The data-set used for training this model, DL Dataset v0.1.1, consists of \textt
 \subsection{New Dataset}
 The new dataset (DL v0.1.2) is essentially the same as the previous version (v.0.1.1), only regenerated with a more recent version of the stack (\texttt{w\_2023\_38}). The number of images is relatively higher though, in the new version: there are \texttt{183750} triplets, out of which \texttt{10147} ($\sim 5\%$) are positives.
 
-We used a $95-5$ training-validation split, which leaves us with \texttt{9198} validation triplets (with \texttt{533} $\simeq 5\%$ positives).
+We used a $95\%-5\%$ training-validation split, which leaves us with \texttt{9198} validation triplets (with \texttt{533} $\simeq 5\%$ positives).
 
 
 \begin{figure}[h]
