@@ -125,54 +125,11 @@ The data-set used for training this model, DL Dataset v0.1.1, consists of \textt
 % ----------------------------------------------------
 \clearpage
 \subsection{New Dataset}
-The new dataset (DL v0.1.2) is essentially the same as the previous version (v.0.1.1), only regenerated with a more recent version of the stack (\texttt{w\_2023\_38}). The number of images is relatively higher though, in the new version: there are \texttt{183750} triplets, out of which \texttt{10147} ($\sim 5\%$) are positives.
+\label{sec:new_dataset}
+The new dataset (DL v0.1.2) is essentially the same as the previous version (v0.1.1), only regenerated with a more recent version of the stack (\texttt{w\_2023\_38}). The number of images is relatively higher though, in the new version: there are \texttt{183750} triplets, out of which \texttt{10147} ($\sim 5\%$) are positives.
 
-We used a $95\%-5\%$ training-validation split, which leaves us with \texttt{9198} validation triplets (with \texttt{533} $\simeq 5\%$ positives).
+We used a $95\%-5\%$ training-validation split, which leaves us with \texttt{9198} validation triplets (with \texttt{533} $\simeq 5\%$ positives). Below evaluation results are based on a snapshot of the network after 255K iterations (937 epochs).
 
-
-\begin{figure}[h]
-  \centering
-  \includegraphics[width=0.4\textwidth]{precrec_13-resnet50-FullAugmentation-scratch-B64__0255000__npy_data_0.1.2-0sigma_256by256__posw_20.png}
-  \includegraphics[width=0.4\textwidth]{confmat_13-resnet50-FullAugmentation-scratch-B64__0255000__npy_data_0.1.2-0sigma_256by256__posw_20.png}
-  \includegraphics[width=0.4\textwidth]{roc_13-resnet50-FullAugmentation-scratch-B64__0255000__npy_data_0.1.2-0sigma_256by256__posw_20.png}
-  \includegraphics[width=0.4\textwidth]{det_13-resnet50-FullAugmentation-scratch-B64__0255000__npy_data_0.1.2-0sigma_256by256__posw_20.png}
-  \caption{Evaluation results based on the whole dataset.}
-  \label{fig:tract_templates}
-\end{figure}
-
-\begin{figure}[h]
-  \centering
-  \includegraphics[width=0.4\textwidth]{precrec_13-resnet50-FullAugmentation-scratch-B64__0255000__npy_data_0.1.2-5sigma_256by256__posw_20.png}
-  \includegraphics[width=0.4\textwidth]{confmat_13-resnet50-FullAugmentation-scratch-B64__0255000__npy_data_0.1.2-5sigma_256by256__posw_20.png}
-  \includegraphics[width=0.4\textwidth]{roc_13-resnet50-FullAugmentation-scratch-B64__0255000__npy_data_0.1.2-5sigma_256by256__posw_20.png}
-  \includegraphics[width=0.4\textwidth]{det_13-resnet50-FullAugmentation-scratch-B64__0255000__npy_data_0.1.2-5sigma_256by256__posw_20.png}
-  \caption{Only sources with $snr > 5\sigma$}
-  \label{fig:tract_templates}
-\end{figure}
-
-\begin{figure}[h]
-  \centering
-  \includegraphics[width=0.4\textwidth]{precrec_13-resnet50-FullAugmentation-scratch-B64__0255000__npy_data_0.1.2-6sigma_256by256__posw_20.png}
-  \includegraphics[width=0.4\textwidth]{confmat_13-resnet50-FullAugmentation-scratch-B64__0255000__npy_data_0.1.2-6sigma_256by256__posw_20.png}
-  \includegraphics[width=0.4\textwidth]{roc_13-resnet50-FullAugmentation-scratch-B64__0255000__npy_data_0.1.2-6sigma_256by256__posw_20.png}
-  \includegraphics[width=0.4\textwidth]{det_13-resnet50-FullAugmentation-scratch-B64__0255000__npy_data_0.1.2-6sigma_256by256__posw_20.png}
-  \caption{Only sources with $snr > 6\sigma$}
-  \label{fig:tract_templates}
-\end{figure}
-
-\clearpage
-\subsubsection{Some Exemplar Triplets}
-\begin{figure}[h]
-  \centering
-  \includegraphics[width=0.4\textwidth]{TP_13-resnet50-FullAugmentation-scratch-B64_epoch0000095_iter0255000__npy_data_0.1.2-0sigma_256by256__posw_1.png}
-  \includegraphics[width=0.4\textwidth]{TN_13-resnet50-FullAugmentation-scratch-B64_epoch0000095_iter0255000__npy_data_0.1.2-0sigma_256by256__posw_1.png}
-  \caption{Exemplar top-scored triplets from the two ``true'' categories.}
-  \label{fig:tract_templates}
-\end{figure}
-
-
-\clearpage
-\subsubsection{New Dataset -- No Weight Balancing}
 
 \begin{figure}[h]
   \centering
@@ -205,9 +162,72 @@ We used a $95\%-5\%$ training-validation split, which leaves us with \texttt{919
 \end{figure}
 
 \clearpage
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.4\textwidth]{TP_13-resnet50-FullAugmentation-scratch-B64_epoch0000095_iter0255000__npy_data_0.1.2-0sigma_256by256__posw_1.png}
+  \includegraphics[width=0.4\textwidth]{TN_13-resnet50-FullAugmentation-scratch-B64_epoch0000095_iter0255000__npy_data_0.1.2-0sigma_256by256__posw_1.png}
+  \caption{Exemplar top-scored triplets from the two ``true'' categories.}
+  \label{fig:tract_templates}
+\end{figure}
+
+\clearpage
+\subsection{Training for Longer}
+\label{sec:longer}
+Below you can see evaluation results of the same network as in Section \ref{sec:new_dataset}, but after the network has been trained for 8M iterations (2934 epochs). Note the improvement in the results, but also refer to the notes in the next section (\ref{sec:verdict}) on how these numbers should be interpreted.
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.4\textwidth]{precrec_13-resnet50-FullAugmentation-scratch-B64_epoch0002934_iter8000000__npy_data_0.1.2-6sigma_256by256__posw_1.png}
+  \includegraphics[width=0.4\textwidth]{confmat_13-resnet50-FullAugmentation-scratch-B64_epoch0002934_iter8000000__npy_data_0.1.2-6sigma_256by256__posw_1.png}
+  \includegraphics[width=0.4\textwidth]{roc_13-resnet50-FullAugmentation-scratch-B64_epoch0002934_iter8000000__npy_data_0.1.2-6sigma_256by256__posw_1.png}
+  \includegraphics[width=0.4\textwidth]{det_13-resnet50-FullAugmentation-scratch-B64_epoch0002934_iter8000000__npy_data_0.1.2-6sigma_256by256__posw_1.png}
+  \caption{Only sources with $snr > 6\sigma$  (with weight-balancing). The red cross indicates the (0.9,0.95) point as defined in OSS-REQ-0353.}
+  \label{fig:longer_6sigma}
+\end{figure}
+
+\clearpage
+\section{Summary}
+\label{sec:verdict}
+The quantitative results show that the simple preliminary binary classifier is close to meeting the requirements of the project -- e.g. see Figure \ref{fig:longer_6sigma}. Direct investigation of the only 10 incorrectly classified samples and taking consequent actions is of course possible, to push the performance of the classifier on precursor data even more -- e.g. see DM-42867. Note, however, that this approach should be followed carefully and is not advised as a permanent solution: the more tailor-made the model gets for the precursor data at hand, the less comparable results we should expect from it when it is tested on real data -- the already discussed issue of generalization.
 
 
+\clearpage
 \appendix
+\section{Evaluations with weight-balancing}
+Below plots show evaluation results @255000 iterations (comparable to Section \ref{sec:new_dataset}) where a 20:1 weight has been applied on positive samples for generating the evaluation plots, to compensate for the class imbalance.
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.4\textwidth]{precrec_13-resnet50-FullAugmentation-scratch-B64__0255000__npy_data_0.1.2-0sigma_256by256__posw_20.png}
+  \includegraphics[width=0.4\textwidth]{confmat_13-resnet50-FullAugmentation-scratch-B64__0255000__npy_data_0.1.2-0sigma_256by256__posw_20.png}
+  \includegraphics[width=0.4\textwidth]{roc_13-resnet50-FullAugmentation-scratch-B64__0255000__npy_data_0.1.2-0sigma_256by256__posw_20.png}
+  \includegraphics[width=0.4\textwidth]{det_13-resnet50-FullAugmentation-scratch-B64__0255000__npy_data_0.1.2-0sigma_256by256__posw_20.png}
+  \caption{Evaluation results based on the whole dataset (with weight-balancing).}
+  \label{fig:tract_templates}
+\end{figure}
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.4\textwidth]{precrec_13-resnet50-FullAugmentation-scratch-B64__0255000__npy_data_0.1.2-5sigma_256by256__posw_20.png}
+  \includegraphics[width=0.4\textwidth]{confmat_13-resnet50-FullAugmentation-scratch-B64__0255000__npy_data_0.1.2-5sigma_256by256__posw_20.png}
+  \includegraphics[width=0.4\textwidth]{roc_13-resnet50-FullAugmentation-scratch-B64__0255000__npy_data_0.1.2-5sigma_256by256__posw_20.png}
+  \includegraphics[width=0.4\textwidth]{det_13-resnet50-FullAugmentation-scratch-B64__0255000__npy_data_0.1.2-5sigma_256by256__posw_20.png}
+  \caption{Only sources with $snr > 5\sigma$ (with weight-balancing)}
+  \label{fig:tract_templates}
+\end{figure}
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.4\textwidth]{precrec_13-resnet50-FullAugmentation-scratch-B64__0255000__npy_data_0.1.2-6sigma_256by256__posw_20.png}
+  \includegraphics[width=0.4\textwidth]{confmat_13-resnet50-FullAugmentation-scratch-B64__0255000__npy_data_0.1.2-6sigma_256by256__posw_20.png}
+  \includegraphics[width=0.4\textwidth]{roc_13-resnet50-FullAugmentation-scratch-B64__0255000__npy_data_0.1.2-6sigma_256by256__posw_20.png}
+  \includegraphics[width=0.4\textwidth]{det_13-resnet50-FullAugmentation-scratch-B64__0255000__npy_data_0.1.2-6sigma_256by256__posw_20.png}
+  \caption{Only sources with $snr > 6\sigma$  (with weight-balancing)}
+  \label{fig:tract_templates}
+\end{figure}
+
+\clearpage
+
 % Include all the relevant bib files.
 % https://lsst-texmf.lsst.io/lsstdoc.html#bibliographies
 \section{References} \label{sec:bib}
